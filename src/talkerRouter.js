@@ -1,28 +1,28 @@
 const { Router } = require('express');
-const fs = require('fs');
-const path = require('path');
+const readFile = require('./helpers/readFile');
 
 const talkerRouter = Router();
 
-const filePath = path.resolve(__dirname, '../talker.json');
-
-talkerRouter.get('/', (_req, res) => {
-  const data = fs.readFileSync(filePath, 'utf-8');
-  const parsed = JSON.parse(data);
-  res.json(parsed).status(200);
+talkerRouter.get('/', async (_req, res) => {
+  try {
+    const data = await readFile();
+    res.json(data).status(200);
+  } catch (error) {
+    console.log(error.message);
+  }
 });
 
-talkerRouter.get('/:id', (req, res) => {
-  const data = fs.readFileSync(filePath, 'utf-8');
-  const parsed = JSON.parse(data);
-  
-  const { id } = req.params;
-
-  const talker = parsed.find((t) => t.id === Number(id));
-  
-  if (!talker) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
-  
-  res.json(talker).status(200);
+talkerRouter.get('/:id', async (req, res) => {
+  try {
+    const data = await readFile();
+    const { id } = req.params;
+    const talker = data.find((t) => t.id === Number(id));
+    
+    if (talker) return res.json(talker).status(200);
+    res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  } catch (error) {
+    console.log(error.message);
+  }
 });
 
 module.exports = talkerRouter;
