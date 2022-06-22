@@ -1,9 +1,4 @@
-class ValidationError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = this.constructor.name;
-  }
-}
+const ValidationError = require('../helpers/ValidationError');
 
 const emptyEmail = 'O campo "email" é obrigatório';
 const invalidEmail = 'O "email" deve ter o formato "email@email.com"';
