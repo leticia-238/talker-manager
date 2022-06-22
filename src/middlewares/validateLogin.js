@@ -14,9 +14,9 @@ const validateLogin = (req, _res, next) => {
   const { email, password } = req.body;
   
   if (!email) throw new ValidationError(emptyEmail);
-  if (!/\S+@\S+\.com/.test(email)) throw new ValidationError(invalidEmail);
-  if (!password) throw new ValidationError(emptyPassword);
-  if (!/\S{6,}/.test(password)) throw new ValidationError(invalidPassword);
+  else if (!/\S+@\S+\.com/.test(email)) throw new ValidationError(invalidEmail);
+  else if (!password) throw new ValidationError(emptyPassword);
+  else if (!/\S{6,}/.test(password)) throw new ValidationError(invalidPassword);
   
   next(); 
 };
