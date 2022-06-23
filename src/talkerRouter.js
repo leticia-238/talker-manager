@@ -30,4 +30,16 @@ talkerRouter.post('/', validateAuth, validateTalker, async (req, res) => {
   res.status(201).json(talker);
 });
 
+talkerRouter.put('/:id', validateAuth, validateTalker, async (req, res) => {
+  const newTalker = req.body;
+  const data = await readFile();
+  const { id } = req.params;
+  const talkerIndex = data.findIndex((t) => t.id === Number(id));
+  const changedTalker = { ...newTalker, id: Number(id) };
+  data[talkerIndex] = changedTalker;
+  
+  await writeFile(data);
+  res.status(200).json(changedTalker);
+});
+
 module.exports = talkerRouter;
