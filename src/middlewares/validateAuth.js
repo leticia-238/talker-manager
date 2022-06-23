@@ -5,14 +5,14 @@ class AuthorizationError extends Error {
   }
 }
 
-const tokenNotFound = 'Token não encontrado';
-const invalidToken = 'Token inválido';
+const TOKEN_NOT_FOUND = 'Token não encontrado';
+const INVALID_TOKEN = 'Token inválido';
 
 const validateAuth = (req, _res, next) => {
   const { authorization } = req.headers;
 
-  if (!authorization) throw new AuthorizationError(tokenNotFound);
-  else if (!/\S{16}/.test(authorization)) throw new AuthorizationError(invalidToken);
+  if (!authorization) throw new AuthorizationError(TOKEN_NOT_FOUND);
+  else if (!/\S{16}/.test(authorization)) throw new AuthorizationError(INVALID_TOKEN);
 
   next();
 };
