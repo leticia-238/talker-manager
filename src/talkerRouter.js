@@ -13,6 +13,14 @@ talkerRouter.get('/', async (_req, res) => {
   res.json(data).status(200);
 });
 
+talkerRouter.get('/search', validateAuth, async (req, res) => {
+  const data = await readFile();
+  const { q } = req.query; 
+  const talkersList = data.filter(({ name }) => name.includes(q));
+
+  res.status(200).json(talkersList);
+});
+
 talkerRouter.get('/:id', async (req, res) => {
   const data = await readFile();
   const { id } = req.params;
