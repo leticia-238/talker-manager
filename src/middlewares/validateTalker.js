@@ -38,10 +38,10 @@ const validateTalker = (req, _res, next) => {
   checkEmptyField(age, 'age');
   checkEmptyField(talk, 'talk');
   
-  const { watchedAt, rate } = talk;
+  const { watchedAt, rate = '' } = talk;
   
   checkEmptyField(watchedAt, 'watchedAt');
-  checkEmptyField(rate, 'rate');
+  checkEmptyField(rate.toString(), 'rate');
 
   validateName(name);
   validateAge(age);
