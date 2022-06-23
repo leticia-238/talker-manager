@@ -42,4 +42,14 @@ talkerRouter.put('/:id', validateAuth, validateTalker, async (req, res) => {
   res.status(200).json(changedTalker);
 });
 
+talkerRouter.delete('/:id', validateAuth, async (req, res) => {
+  const data = await readFile();
+  const { id } = req.params;
+  const talkerIndex = data.findIndex((t) => t.id === Number(id));
+  data.splice(talkerIndex, 1);
+  
+  await writeFile(data);
+  res.status(204).send();
+});
+
 module.exports = talkerRouter;
